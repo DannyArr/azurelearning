@@ -4,5 +4,14 @@
 $enc = New-EncryptedString -String "TestPassword"
 $enc
 
-$string = Get-DecryptedString -EncryptedString $enc
+$sstring = Get-DecryptedString -EncryptedString $enc
+$sstring
+
+$string = Get-DecryptedString -EncryptedString $enc -AsPlainText
 $string
+
+$path = "../../config/azurelearning/sp.xml"
+Test-Path $path
+$sp = Import-Clixml $path
+$sp | fl
+$sp.ServicePrincipal

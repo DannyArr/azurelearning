@@ -3,7 +3,9 @@ function Get-DecryptedString {
         [parameter(mandatory=$true)]
         [string]$EncryptedString,
 
-        [string]$KeyPath = '/home/danny/keys/dansazure_aes.key'
+        [string]$KeyPath = '/home/danny/keys/dansazure_aes.key',
+
+        [switch]$AsPlainText
     )
 
     $key = Get-Content $KeyPath
@@ -12,7 +14,12 @@ function Get-DecryptedString {
     $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureString)
     $plainPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
 
-    return $plainPassword
+    if($AsPlainText){
+        return $plainPassword
+    }
+    else{
+        return $secureString
+    }
 
 }
 
