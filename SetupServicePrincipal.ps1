@@ -21,25 +21,10 @@ $spObject | Export-Clixml $path -Force
 New-AzRoleAssignment -ServicePrincipalName $sp.ApplicationId `
     -RoleDefinitionName "Contributor"
 
-$spRetrieved = Import-Clixml $path
-$sstring = Get-DecryptedString -EncryptedString $spRetrieved.Password
-
-
-
-
 <#  ##Removing an app and SP##
 
     $appId = ""
     Remove-AzADServicePrincipal -ApplicationId $appId -Force
     Remove-AzADApplication -ApplicationId $appId -Force
 #>
-
-
-$cred = [PSCredential]::new($sp.ApplicationId,$sstring)
-
-Connect-AzAccount -ServicePrincipal `
-    -Credential $cred `
-    -Tenant $context.Tenant.Id `
-    -Subscription $context.Subscription.Id
-
     

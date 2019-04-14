@@ -10,11 +10,12 @@ function Get-DecryptedString {
 
     $key = Get-Content $KeyPath
 
-    $secureString = ConvertTo-SecureString $enc -Key $key
-    $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureString)
-    $plainPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+    $secureString = ConvertTo-SecureString $EncryptedString -Key $key
 
     if($AsPlainText){
+        $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureString)
+        $plainPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+
         return $plainPassword
     }
     else{
